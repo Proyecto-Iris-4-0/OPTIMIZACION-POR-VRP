@@ -1,4 +1,4 @@
-# OPTIMIZACION POR VRP
+# OPTIMIZACIÓN POR VRP
 
 En este repositorio se encuentra el código necesario para optimización de rutas siguiendo una estrategia en dos pasos,
 
