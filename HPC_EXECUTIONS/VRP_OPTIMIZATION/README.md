@@ -14,3 +14,8 @@ El archivo:
 
 se encarga de generar la estructura necesaria de ficheros, y los datos de entrada necesarios para que por cada día haya una instancia de optimización.
 
+El archivo:
+
+1. sbatch.cmd
+
+se encarga de encolar los procesos de optimización en un HPC mediante el programa slurm.
