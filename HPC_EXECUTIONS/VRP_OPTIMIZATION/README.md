@@ -9,6 +9,8 @@ Los archivos que se encargan de la optimización son :
 3. GurobiVRP.py
 
 El archivo: 
-*generate_input_data.py 
+
+1.generate_input_data.py 
+
 se encarga de generar la estructura necesaria de ficheros, y los datos de entrada necesarios para que por cada día haya una instancia de optimización.
 
