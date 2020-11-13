@@ -116,6 +116,20 @@ def calculateTimeGraphhopper(cont_list):
 
     return tiempo
 
+def calculateDistanceGraphhopper(cont_list):
+    tiempo=0
+    for j in range(0,len(cont_list)-1):
+
+        if matriz_distancias_col.find_one({'_id':cont_list[j]+'-'+cont_list[j+1]+'-graphhopper'})!=None:
+            consulta=matriz_distancias_col.find_one({'_id':cont_list[j]+'-'+cont_list[j+1]+'-graphhopper'})['distancia']
+
+            tiempo=tiempo+consulta
+
+        else:
+            print('aaa')
+        return tiempo
+
+
 
 
 '''
@@ -162,6 +176,49 @@ que en ella intervienen
 def getContsOfRoute(route, year):
     conts = []
     for fila in trayectos_originales_col.find({'year': year, 'cod_ruta': route}):
+        conts.append(fila)
+    conts.sort(key=orderFunction)
+    conts_ids = []
+
+    for cont in conts:
+        conts_ids.append(cont['cod_cont'])
+    if 'deposito' in conts_ids:
+        conts_ids.remove('deposito')
+    if 'depositoUrbaser' in conts_ids:
+        conts_ids.remove('depositoUrbaser')
+    if 'Ecoparque' in conts_ids:
+        conts_ids.remove('dep')
+    conts_ids.insert(0, 'depositoUrbaser')
+    conts_ids.append('Ecoparque')
+
+    return (conts_ids)
+
+
+
+
+def getContsOfRouteOPT(route, year):
+    conts = []
+    for fila in trayectos_optimizados_col.find({'year': year, 'cod_ruta': route}):
+        conts.append(fila)
+    conts.sort(key=orderFunction)
+    conts_ids = []
+
+    for cont in conts:
+        conts_ids.append(cont['cod_cont'])
+    if 'deposito' in conts_ids:
+        conts_ids.remove('deposito')
+    if 'depositoUrbaser' in conts_ids:
+        conts_ids.remove('depositoUrbaser')
+    if 'Ecoparque' in conts_ids:
+        conts_ids.remove('dep')
+    conts_ids.insert(0, 'depositoUrbaser')
+    conts_ids.append('Ecoparque')
+
+    return (conts_ids)
+
+def getContsOfRouteVRP(dia, ruta):
+    conts = []
+    for fila in db_rutas_normalizada['trayectos_vrp_2020'].find({'dia': dia, 'ruta': ruta}):
         conts.append(fila)
     conts.sort(key=orderFunction)
     conts_ids = []
@@ -438,3 +495,19 @@ for dia_ruta in dias_rutas:
     par=getPar(dia_ruta=dia_ruta)
     var[dia_ruta]=len(getRutas2020ByDay(estacion=estacion,dia=dia,par=par))
 #print(var)
+
+lista=[]
+def order(o):
+    return(o['municipio'])
+for municipio in municipios_col.find():
+    obj={'municipio':municipio['nombre_municipio'],'coordenadas':[municipio['lon_centro'],municipio['lat_centro']]}
+    lista.append(obj)
+
+lista.sort(key=order)
+print(lista)
+with open ('municipios.csv','w') as f:
+    csv_writer=csv.writer(f,delimiter=';')
+    csv_writer.writerow(['municipio','longitud','latitud'])
+    for mun in lista:
+        csv_writer.writerow([mun['municipio'],mun['coordenadas'][0],mun['coordenadas'][1]])
+
