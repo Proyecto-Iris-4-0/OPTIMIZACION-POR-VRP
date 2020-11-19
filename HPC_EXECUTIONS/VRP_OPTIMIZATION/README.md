@@ -14,10 +14,15 @@ El archivo:
 
 se encarga de generar la estructura necesaria de ficheros, y los datos de entrada necesarios para que por cada día haya una instancia de optimización.
 
-El archivo:
+Se genera un archivo:
 
 1. sbatch.cmd
 
-se encarga de encolar los procesos de optimización en un HPC mediante el programa slurm.
+por cada ejecución, y cada uno se encarga de encolar el proceso en un HPC mediante el programa slurm.
 
-El archivo
+El archivo:
+
+execute_all.py
+
+Ejecuta todos los archivos sbatch.cmd 
+
